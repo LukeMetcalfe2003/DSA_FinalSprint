@@ -3,13 +3,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class TreeRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String inputNums;
+    private String inputNumbers;
+
+    @Column(name = "tree_structure", length = 2000)
     private String treeStructure;
 
     public Long getId() {
@@ -20,12 +23,12 @@ public class TreeRecord {
         this.id = id;
     }
 
-    public String getInputNums() {
-        return inputNums;
+    public String getInputNumbers() {
+        return inputNumbers;
     }
 
-    public void setInputNums(String inputNums) {
-        this.inputNums = inputNums;
+    public void setInputNumbers(String inputNumbers) {
+        this.inputNumbers = inputNumbers;
     }
 
     public String getTreeStructure() {

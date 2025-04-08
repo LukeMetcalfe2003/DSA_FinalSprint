@@ -1,48 +1,49 @@
 package com.example.demo.BinarySearchTree;
 import com.example.demo.BinarySearchTree.TreeRecord;
+import com.example.demo.BinarySearchTree.TreeRecord;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
+import java.util.List;
 @Controller
 public class TreeController {
 
     @Autowired
-    private TreeRecordRepo treeRecordRepo;
+    private TreeRecordRepository treeRecordRepository;
 
-    private BinarySearchTree binarySearchTree = new BinarySearchTree();
+    private BinarySearchTree bst = new BinarySearchTree();
 
     @GetMapping("/enter-numbers")
-    public String showInputForm(){
+    public String showInputForm() {
         return "enter-numbers";
     }
 
     @PostMapping("/process-numbers")
-    public String processNumbers(@RequestParam("numbers") String numbers, Model model){
-        String[] numberArray = numbers.split(",");
-        List<Integer> numberList = new ArrayList<>();
-
-        for(String number : numberArray){
-            numberList.add(Integer.parseInt(number.trim()));
-            binarySearchTree.insert(Integer.parseInt(number.trim()));
+    @ResponseBody
+    public java.util.Map<String, Object> processNumbersJson(@RequestParam("numbers") String numbers) {
+        BinarySearchTree bstJson = new BinarySearchTree();
+        String[] numArray = numbers.split(",");
+        for (String num : numArray) {
+            bstJson.insert(Integer.parseInt(num.trim()));
         }
 
         TreeRecord treeRecord = new TreeRecord();
-        treeRecord.setInputNums(numbers);
-        treeRecord.setTreeStructure(binarySearchTree.inorderTraversal().toString());
-        treeRecordRepo.save(treeRecord);
+        treeRecord.setInputNumbers(numbers);
 
-        model.addAttribute("treeStructure", binarySearchTree.inorderTraversal());
-        return "tree-result";
+        treeRecord.setTreeStructure(bstJson.toJson());
+        treeRecordRepository.save(treeRecord);
+
+        return bstJson.toJsonRec(bstJson.getRoot());
     }
+
 
     @GetMapping("/previous-trees")
-    public String showPreviousTrees(Model model){
-        List<TreeRecord> records = treeRecordRepo.findAll();
+    public String showPreviousTrees(Model model) {
+        List<TreeRecord> records = treeRecordRepository.findAll();
         model.addAttribute("records", records);
-        return "previous-trees";
-    }
+        return "previous-trees"; }
 }
