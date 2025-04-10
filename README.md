@@ -6,7 +6,8 @@ How To Use:
 
 2. Install Dependencies:
    cd <project-directory>
-   mvn instal
+   
+   mvn install
 
 3. Run the application when dependencies are installed
    Run the DemoApllication.java file from your IDE
