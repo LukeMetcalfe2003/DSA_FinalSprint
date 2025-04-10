@@ -5,7 +5,7 @@ How To Use:
 1. clone the repo to your local machine
 
 2. Install Dependencies:
-   cd <project-directory>
+   cd project-directory
    
    mvn install
 
