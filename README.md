@@ -11,7 +11,7 @@ How To Use:
    mvn install
 
 4. Run the application when dependencies are installed
-   Run the DemoApllication.java file from your IDE
+   Run the DemoApplication.java file from your IDE
 
 5. Once application is running open your web browser and visit: http://localhost:8080/
 
